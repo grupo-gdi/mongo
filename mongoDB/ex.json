@@ -1,0 +1,15 @@
+  {
+    "name": "Max",
+    "age": 29,
+    "address": {
+      "city": "Munich"
+    },
+    "hobbies": [
+      {
+        "name": "Cooking"
+      },
+      {
+        "name": "Sports"
+      }
+    ]
+  }

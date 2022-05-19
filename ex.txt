@@ -1,0 +1,10 @@
+Nome Comum: 'Antílope-tibetano',
+Nome Científico: 'Pantholops hodgsonii'
+Gênero: 'Pantholops',
+Subfamília: ['Pantholopinae','Antilopinae']
+Família: 'Bovidae',
+Ordem: 'Artiodactyla',
+Classe: 'Mammalia',
+Filo: 'Chordata',
+Reino: 'Animalia',
+Grau de Extinção: 'Extinto', 'Ameaçado' ou 'Baixo Risco'
