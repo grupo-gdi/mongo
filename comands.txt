@@ -1,0 +1,40 @@
+-------------------------------------------SERVER---------------------------------------------------
+// startar o server
+sudo systemctl start mongod
+// parar o server
+sudo systemctl stop mongod
+// usar o shell
+sudo systemctl enable mongod
+--------------------------------------------COMANDOS DB---------------------------------------------
+// mostrar os databases
+show dbs
+// usar um database
+use "database"
+
+--------------------------------------------COMANDOS CRUD---------------------------------------------
+db.collection_name.insertOne(data,options) // insere um objeto
+db.collection_name.insertMany(data,options) // insere vários objetos
+db.collection_name.find(filter,options) // Read documents with a cursor
+db.collection_name.find(filter,options).toArray() // Read all documents in an Array format
+db.collection_name.find(filter,options).forEach((e) => {printjson(e)}) // executa uma função anônima em cada documento da coleção 
+db.collection_name.findOne(filter,options) // Read
+db.collection_name.find().pretty() // mostra todos os objetos de uma coleção de forma formatada
+db.collection_name.find().sort(1) // mostra as ocorrencias em ordem crescente ou -1 para decrescente
+db.colletcion_name.updateOne(fitler,data,options)
+db.colletcion_name.updateMany(fitler,data,options)
+db.colletcion_name.update(filter,data,options) // PERIGO, substitue o objeto
+db.colletcion_name.ReplaceOne(fitler,data,options) // Substiue um objeto que passa no filtro por outro + recomendado que update quando a intenção é substituir um objeto inteiramente
+db.colletcion_name.deleteOne(fitler,options)
+db.colletcion_name.deleteMany(fitler,options)
+--------------------------------------------EXEMPLOS-----------------------------------------------------
+db.collection_name.deleteOne({Grupo: "Aves"}) // deleta um elemento que corresponde ao filtro
+db.collection_name.updateOne({Grupo: "Aves"}, {$set: {Grupo:"Passaros"})} // cria ou altera a "propriedade" especificada pelo $set
+db.collection_name.find({Grupo: "Invertrbrados Terrestres"}) // mostra elementos com especificação exatamente igual
+db.collection_name.find({Nível de Proteção na Estratégia Nacional : {$gt: 2}}) // mostra os elementos com "Nivel de Proteção na Estratégia Nacional" maior que 2
+db.collection_name.find({},{name:1}).pretty() // projeta apenas os nomes de todos os elementos dessa coleção com cursor
+db.collection_name.find({},{name:1, _id:0}).pretty() // projeta os nomes de todos(sem id) os elementos dessa coleção com cursor
+db.collection_name.updateMany({},{$set: {status:{delayHours:1,delayMinutes:54}}}) // adiciona um objeto status(documento) encadeado em todos os elementos da coleção
+db.collection_name.find({"status.description" : "on-time"}).pretty()
+db.movieDetails.find({genres: {$in: ["Comedy"]}) // acha todas as ocorrencias de filmes cujo um dos generos é comédial
+db.movieDetails.find({actors: "Mark Ruffalo") // acha todas as ocorrencias de filmes em que Mark Ruffalo participa
+db.movieDetails.find({actors: "Mark Ruffalo").sort(-1) // acha todas as ocorrencias de filmes em que Mark Ruffalo participa e os ordena em ordem decrescente
