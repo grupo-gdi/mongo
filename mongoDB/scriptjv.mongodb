@@ -1,0 +1,52 @@
+use("animais_extincao")
+
+//db.animaismarinhos.aggregate( [
+   // Stage 1: Filter pizza order documents by pizza size
+//   {
+//      $match: { "Grupo": "Mamíferos" }
+//   },
+   // Stage 2: Group remaining documents by pizza name and calculate total quantity
+//   {
+//      $group: { _id: "$Sigla Categoria de Ameaça", media_nivel_prote: { $avg: "$Nível de Proteção na Estratégia Nacional" }, somaniveis: { $sum: "$Nível de Proteção na Estratégia Nacional" } }
+//   }   
+//] )
+
+//db.animaismarinhos.find( { "Sigla Categoria de Ameaça" : { $exists: true } } )
+
+
+//db.animaismarinhos.find({"Principais Ameaças": {$all : ["Extracao Direta:Caça/Pesca","Mineracao" ]}})
+
+//db.animaismarinhos.renameCollection("aimais_marinhos")
+
+//db.animaismarinhos2.aggregate(
+   [
+      {
+         $project:
+           {
+             item: 1,
+             discount:
+               {
+                 $cond: { if: { $gte: [ "$Nível de Proteção na Estratégia Nacional", 4 ] }, then: 40, else: 10 }
+               }
+           }
+      }
+   ]
+//)
+
+
+//db.animaismarinhos2.findOne(
+   {
+     $or: [
+            { "Bioma": "Marinho" },
+            
+          ]
+   }
+//)
+
+
+//db.animaismarinhos.updateOne(
+//  {"Nome Comum": "Tubarão-raposa"},
+//  {$addToSet: {"Estados de Ocorrência":"mongodb"}}
+//)
+
+db.animaismarinhos.find()
