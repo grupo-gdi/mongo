@@ -100,10 +100,10 @@ use("animaisExtinsao");
 //   }
 // ]);
 
-// where
-// db.animaisMarinhos.find({$where: function(){
-//   return ((this.Família) == "Alopiidae") ;
-// }});
+// where  
+db.animaisMarinhos.find({$where: function(){
+  return ((this.Família) == "Alopiidae") ;
+}});
 
 // function
 
@@ -193,14 +193,19 @@ use("animaisExtinsao");
 // db.animaisGeral.save({_id: "6286d06818a96c128c9f682c", "Nome Comum": "Animal Teste"});
 
 // lookUp
-db.animaisGeral.aggregate([
-  {
-     $lookup:
-       {
-         from: "animaisMarinhos",
-         localField: "Nome Comum",
-         foreignField: "Nome Comum",
-         as: "Animais Marinhos"
-       }
-  }
-]);
+// db.animaisGeral.aggregate([
+//   {
+//      $lookup:
+//        {
+//          from: "animaisMarinhos",
+//          localField: "Nome Comum",
+//          foreignField: "Nome Comum",
+//          as: "Animais Marinhos"
+//        }
+//   }
+// ]);
+
+// // deleteOne
+// db.animaisMarinhos.deleteOne({
+//   tuba
+// })
