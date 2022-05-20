@@ -9,5 +9,8 @@ use("animaisExtinsao");
 // db.animaisMarinhos.find({Bioma: "Marinho"}).count();
 
 // find with sort
-db.animaisMarinhos.find().sort({"Gênero": 1});
+// db.animaisMarinhos.find().sort({"Gênero": 1});
 // db.animaisMarinhos.find().sort({"Gênero": -1});
+
+// using limit
+// db.animaisMarinhos.find().limit(3);

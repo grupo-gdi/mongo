@@ -1,0 +1,206 @@
+use("animaisExtinsao");
+
+// db.animaisMarinhos.find({"Estados de Ocorrência":'PE'}).sort({"Gênero":1});
+
+
+//match
+// db.animaisMarinhos.aggregate([
+//   { $match: 
+//     {$and: 
+//       [
+//         {
+//         "Nome Comum": {$regex : "Tubarão"}
+//         },
+//         {
+//           "Estados de Ocorrência": "PE"
+//         }
+//       ]
+//     } 
+//   },
+//   {$sort: {"Nome Comum": 1}}
+// ]);
+
+//max
+// db.animaisMarinhos.aggregate([
+//   { $match:
+//     {
+//     "Nome Comum": {$regex : "Tubarão"}
+//     }
+//   },
+//   {
+//     $group: 
+//     {
+//       _id: "$Nome Comum",
+//       niveldeProteção: {$max: "$Nível de Proteção na Estratégia Nacional"}
+//     }
+//   },
+//   {
+//     $sort:{"niveldeProteção": -1}
+//   }
+// ]);
+
+// gte
+// db.animaisMarinhos.find({"Nível de Proteção na Estratégia Nacional":{$gte : 2}}).sort({
+//   "Nível de Proteção na Estratégia Nacional":1
+// }).toArray();
+
+
+// project
+// db.animaisMarinhos.find({"Estados de Ocorrência":'PE'}, {"Nome Comum":1, "Espécie (Simplificado)": 1, "Sigla Categoria de Ameaça": 1, _id:0}).pretty();
+
+// db.animaisMarinhos.aggregate([
+//   {
+//     $match: 
+//     {
+//       "Estados de Ocorrência": "PB"
+//     }
+//   },
+//   {
+//     $project:
+//     {
+//       _id : 0,
+//       "Nome Comum": 1,
+//       "Espécie (Simplificado)": 1,
+//       "Categoria de Ameaça": 1,
+//       "Ocorre em Pernambuco" : 
+//       {
+//        $cond: 
+//        {
+//          if: {"Estados de Ocorrência":"PE"},
+//          then: "Sim",
+//          else: "Não"
+//        } 
+//       }
+//     }
+//   }
+// ])
+
+// group
+// db.animaisMarinhos.aggregate([
+//   { $match:
+//     {
+//     "Nome Comum": {$regex : "Tubarão"}
+//     }
+//   },
+//   {
+//     $project: 
+//     {
+//       _id: 0,
+//       "Nome Comum": 1,
+//       "Nome da Espécie": "$Espécie (Simplificado)",
+//       "Ocorrência de Estados": {$size: "$Estados de Ocorrência"}
+//     }
+//   },
+//   {
+//     $group: 
+//     {
+//       _id: "$Nome Comum",
+//       "Número de Estados Habitados": {$max: "$Ocorrência de Estados"} 
+//     }
+//   }
+// ]);
+
+// where
+// db.animaisMarinhos.find({$where: function(){
+//   return ((this.Família) == "Alopiidae") ;
+// }});
+
+// function
+
+// db.animaisGeral.aggregate([
+//   {
+//     $project: 
+//     {
+//       _id: 1,
+//       "Bioma Habitado": 
+//       {
+//         $function: 
+//         {
+//           body: function(bioma) {
+//             if (bioma.includes("Marinho"))
+//               return "Marinho";
+//             return "Terrestre";
+//           },
+//           args: ["$Bioma"],
+//           lang:"js"
+//         }
+//       }
+//     }
+//   },
+//   {
+//       $group:
+//       {
+//           _id: "$Bioma Habitado",
+//           QuantidadeEspécies: {$sum: 1}
+//       }
+//   }
+//   ]);
+
+//Update
+// db.animaisMarinhos.updateOne({"Nome Comum": "Tubarão-raposa"}, 
+//   {
+//     $set:
+//     {
+//       envergadura: "5 metros"
+//     }
+//   }
+// );
+
+// db.animaisMarinhos.findOne({"Nome Comum": "Tubarão-raposa"});
+
+
+// findOne
+// db.animaisGeral.findOne({"Nome Comum": {$regex : "Macaco"}, "Principais Ameaças": {$regex : "Caça"},
+// "Bioma" : "Mata Atlântica", "Estados de Ocorrência": "PE"
+// });
+
+
+// filter
+// db.animaisGeral.aggregate([
+//   {
+//     $project: 
+//     {
+//       _id: 0,
+//       "Nome Popular": "$Nome Comum",
+//       "EstadosHabitados": 
+//       {
+//         $filter: 
+//         {
+//           input: "$Estados de Ocorrência",
+//           as: "a",
+//           cond:
+//           {
+//             $function: 
+//             {
+//               body: function(estados) {
+//                 return estados.includes("PR")
+//                 && estados.includes("SC") &&
+//                 estados.includes("RS");
+//               },
+//               args:["$Estados de Ocorrência"],
+//               lang:"js"
+//             }
+//           }
+//         }
+//       }
+//     }
+//   }
+// ]);
+
+// // como um insert
+// db.animaisGeral.save({"Nome Comum": "Boi Giu"});
+// // como um update
+// db.animaisGeral.save({_id: "6286d06818a96c128c9f682c", "Nome Comum": "Animal Teste"});
+
+// lookUp
+db.animaisGeral.aggregate([
+  {
+     $lookup:
+       {
+         from: "animaisMarinhos",
+         localField: "Nome Comum",
+         foreignField: "Nome Comum",
+         as: "Animais Marinhos"
+       }
+  }
+]);
